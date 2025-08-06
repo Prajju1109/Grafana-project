@@ -24,18 +24,19 @@ pipeline {
         }
         
         
-        stage('Deploy to k8s'){
-           when {
+        stage('Deploy to k8s') {
+    when {
         branch 'master'
     }
-            steps{
-                script{
-                      kubernetesDeploy(
-            configs: 'deploymentsservice.yaml',
-            kubeconfigId: 'kubeconfig'
-        )
-                }
-            }
+    steps {
+        script {
+            kubernetesDeploy(
+                configs: 'deploymentservice.yaml', // ✅ correct file name
+                kubeconfigId: 'kubeconfig'
+            )
         }
+    }
+}
+
     }
 }
