@@ -7,13 +7,7 @@ pipeline {
                sh 'mvn clean install'
             }
         }
-        stage('Build docker image'){
-            steps{
-                script{
-                    sh 'docker build -t prajju1109/image1:v1 .'
-                }
-            }
-        }
+        
           stage('Docker login') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockercred', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
@@ -33,11 +27,7 @@ pipeline {
     }
 }
         stage('Deploy to k8s') {
-  // when {
-    //    expression {
-    //        return env.BRANCH_NAME == 'master'
-    //    }
- //   }
+        when{ expression {env.GIT_BRANCH == 'master'}}
             
 
     steps {
