@@ -28,8 +28,10 @@ pipeline {
             when{ expression {env.GIT_BRANCH == 'master'}}
             steps{
                 script{
-                     kubernetesDeploy(configs: 'deploymentservice.yaml', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://'])
-                   
+                      kubernetesDeploy(
+            configs: 'deploymentservice.yaml',
+            kubeconfigId: 'kubeconfig'
+        )
                 }
             }
         }
