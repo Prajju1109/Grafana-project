@@ -25,9 +25,12 @@ pipeline {
         
         
         stage('Deploy to k8s') {
-   // when {
-     //   branch 'master'
-  //  }
+   when {
+        expression {
+            return env.BRANCH_NAME == 'master'
+        }
+    }
+
     steps {
         script {
             kubernetesDeploy(
