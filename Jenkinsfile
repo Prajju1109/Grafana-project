@@ -23,13 +23,22 @@ pipeline {
             }
         }
         
-        
-        stage('Deploy to k8s') {
-   when {
-        expression {
-            return env.BRANCH_NAME == 'master'
+        stage('Debug Branch Name') {
+    steps {
+        script {
+            echo "BRANCH_NAME env: ${env.BRANCH_NAME}"
+            sh 'git branch'
+            sh 'echo Current Git Branch: $(git rev-parse --abbrev-ref HEAD)'
         }
     }
+}
+        stage('Deploy to k8s') {
+  // when {
+    //    expression {
+    //        return env.BRANCH_NAME == 'master'
+    //    }
+ //   }
+            
 
     steps {
         script {
