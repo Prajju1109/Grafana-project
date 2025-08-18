@@ -7,6 +7,13 @@ pipeline {
                sh 'mvn clean install'
             }
         }
+        stage('Build docker image'){
+            steps{
+                script{
+                    sh 'docker build -t prajju1109/image1:v1 .'
+                }
+            }
+        }
         
           stage('Docker login') {
             steps {
@@ -17,19 +24,10 @@ pipeline {
             }
         }
         
-        stage('Debug Branch Name') {
-    steps {
-        script {
-            echo "BRANCH_NAME env: ${env.BRANCH_NAME}"
-            sh 'git branch'
-            sh 'echo Current Git Branch: $(git rev-parse --abbrev-ref HEAD)'
-        }
-    }
-}
-        stage('Deploy to k8s') {
-        when{ expression {env.GIT_BRANCH == 'master'}}
+        
+stage('Deploy to k8s') {
+when{ expression {env.GIT_BRANCH == 'master'}}
             
-
     steps {
         script {
             kubernetesDeploy(
