@@ -1,42 +1,38 @@
-pipeline {
+pipeline{
     agent any
     stages{
-        stage('Build Maven'){
+        stage('checkout the code from github'){
             steps{
-                git url:'https://github.com/Prajju1109/cicdakshat/', branch: "master"
-               sh 'mvn clean install'
+                 git url: 'https://github.com/Prajju1109/Grafana-project.git'
+                 echo 'github url checkout'
             }
         }
-        stage('Build docker image'){
+        stage('codecompile with akshat'){
             steps{
-                script{
-                    sh 'docker build -t prajju1109/image1:v1 .'
-                }
+                echo 'starting compiling'
+                sh 'mvn compile'
+            }
+        }
+        stage('codetesting with prajwal'){
+            steps{
+                sh 'mvn test'
             }
         }
         
-          stage('Docker login') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockercred', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                    sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push prajju1109/image1:v1'
-                }
+        stage('package with prajwal'){
+            steps{
+                sh 'mvn package'
             }
         }
-        
-        
-stage('Deploy to k8s') {
-when{ expression {env.GIT_BRANCH == 'master'}}
-            
-    steps {
-        script {
-            kubernetesDeploy(
-                configs: 'deploymentservice.yaml', // ✅ correct file name
-                kubeconfigId: 'kubeconfig'
-            )
-        }
-    }
-}
-
+        stage('run dockerfile'){
+          steps{
+               sh 'docker build -t grafanaimg .'
+           }
+         }
+        stage('port expose'){
+            steps{
+                sh 'docker run -dt -p 8091:8091 --name c000 grafanaimg'
+            }
+        }   
     }
 }
