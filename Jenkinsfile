@@ -27,12 +27,12 @@ pipeline{
     
         stage('run dockerfile'){
           steps{
-               sh 'docker build -t proimage1 .'
+               sh 'docker build -t proimage11 .'
            }
          }
         stage('port expose'){
             steps{
-                sh 'docker run -dt -p 1234:80 --name c01 proimage1'
+                sh 'docker run -dt -p 1234:8085 --name container1 proimage11'
             
         }   
     }
