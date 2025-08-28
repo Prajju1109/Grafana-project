@@ -32,7 +32,7 @@ pipeline{
          }
         stage('port expose'){
             steps{
-                sh 'docker run -dt -p 1234:8085 --name cont1 primage11'
+                sh 'docker run -dt -p 123:8085 --name cont1 primage11'
             
         }   
     }
