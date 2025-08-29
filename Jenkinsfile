@@ -7,7 +7,7 @@ pipeline{
                  echo 'github url checkout'
             }
         }
-        stage('codecompile with akshat'){
+        stage('codecompile with prajwal'){
             steps{
                 echo 'starting compiling'
                 sh 'mvn compile'
@@ -27,12 +27,12 @@ pipeline{
     
         stage('run dockerfile'){
           steps{
-               sh 'docker build -t proimage12 .'
+               sh 'docker build -t primage1 .'
            }
          }
         stage('port expose'){
             steps{
-                sh 'docker run -dt -p 8085:8085 --name cont12 primage12'
+                sh 'docker run -dt -p 8085:8085 --name cont01 primage1'
             
         }   
     }
