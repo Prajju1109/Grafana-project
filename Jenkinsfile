@@ -27,12 +27,12 @@ pipeline{
     
         stage('run dockerfile'){
           steps{
-               sh 'docker build -t primage1 .'
+               sh 'docker build -t primage11 .'
            }
          }
         stage('port expose'){
             steps{
-                sh 'docker run -dt -p 8085:8085 --name cont01 primage1'
+                sh 'docker run -dt -p 8084:8085 --name cont21 primage11'
             
         }   
     }
