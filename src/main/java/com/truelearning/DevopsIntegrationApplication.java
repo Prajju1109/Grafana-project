@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DevopsIntegrationApplication {
 
-	@GetMapping
+	@GetMapping("/")
 	public String message(){
 		return "welcome to True learning by Akshat";
 	}
